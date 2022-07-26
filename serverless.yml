@@ -1,0 +1,31 @@
+org: jjvera96
+app: mail-api
+service: mail-api
+frameworkVersion: '3'
+
+provider:
+  name: aws
+  runtime: python3.8
+  region: us-east-1
+
+functions:
+  hello:
+    handler: handler.hello
+    events:
+      - httpApi:
+          path: /
+          method: get
+  send:
+    handler: handler.send_mail
+    events:
+      - httpApi:
+          path: /send_mail
+          method: post
+
+plugins:
+  - serverless-offline
+  - serverless-python-requirements
+
+custom:
+  pythonRequirements:
+    dockerizePip: non-linux
